@@ -29,5 +29,4 @@ public class ProjectReactorApplication {
         System.out.println(itemsFromMono);
         System.out.println(itemsFromFlux);
     }
-
 }
