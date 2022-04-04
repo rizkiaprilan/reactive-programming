@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
-public class ProjectReactorApplication {
+public class C_SubscribeMonoReactiveApplication {
 
     public static void main(String[] args) {
         // create a Mono
