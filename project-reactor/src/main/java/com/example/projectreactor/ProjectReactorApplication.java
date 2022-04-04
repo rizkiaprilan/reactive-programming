@@ -1,28 +1,35 @@
 package com.example.projectreactor;
 
-import org.reactivestreams.Publisher;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import reactor.core.publisher.Mono;
-
-import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
 public class ProjectReactorApplication {
 
     public static void main(String[] args) {
-        Publisher<String> publisher = Mono.just("Hello");
+        // create a Mono
+        Mono<String> mono = Mono.just("Hello Rizki");
 
-        // will create an empty Mono
-        Mono<String> mono = Mono.justOrEmpty(null);
+        // subscribe to a Mono
+        mono.subscribe(
+                data -> System.out.println(data), // onNext
+                err -> System.out.println(err),  // onError
+                () -> System.out.println("Completed!") // onComplete
+        );
 
-        // Create a Mono from the Supplier interface
-        Mono <String> fromSupplier = Mono.fromSupplier(() -> "Hello");
+        // =====================
+        System.out.println("=====================");
 
-        // From Callable interface
-        Mono<String> fromCallable = Mono.fromCallable(() -> "Hello");
-        
-        // Creating a Mono from Future
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "some value");
-        Mono<String> fromFuture = Mono.fromFuture(completableFuture);
+        // create a Mono
+        Mono<String> fromSupplier = Mono.fromSupplier(() -> {
+            throw new RuntimeException("Exception occurred!");
+        });
+
+        // subscribe to a Mono
+        fromSupplier.subscribe(
+                data -> System.out.println("YOUR DATA: " + data), // onNext
+                err -> System.out.println("SOMETHING ERROR: " + err),  // onError
+                () -> System.out.println("Completed!") // onComplete
+        );
     }
 }
