@@ -1,32 +1,28 @@
 package com.example.projectreactor;
 
+import org.reactivestreams.Publisher;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @SpringBootApplication
 public class ProjectReactorApplication {
 
     public static void main(String[] args) {
-        List<Integer> itemsFromMono = new ArrayList<>();
-        List<Integer> itemsFromFlux = new ArrayList<>();
+        Publisher<String> publisher = Mono.just("Hello");
 
-        // Create a Mono
-        Mono<Integer> mono = Mono.just(121);
+        // will create an empty Mono
+        Mono<String> mono = Mono.justOrEmpty(null);
 
-        // Create a Flux
-        Flux<Integer> flux = Flux.just(12, 14, 9, 11, 12, 14, 9, 11, 12, 14, 9, 11, 12, 14);
+        // Create a Mono from the Supplier interface
+        Mono <String> fromSupplier = Mono.fromSupplier(() -> "Hello");
 
-        // Subscribe to Mono
-        mono.subscribe(itemsFromMono::add);
-
-        // Subscribe to Flux
-        flux.subscribe(itemsFromFlux::add);
-
-        System.out.println(itemsFromMono);
-        System.out.println(itemsFromFlux);
+        // From Callable interface
+        Mono<String> fromCallable = Mono.fromCallable(() -> "Hello");
+        
+        // Creating a Mono from Future
+        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "some value");
+        Mono<String> fromFuture = Mono.fromFuture(completableFuture);
     }
 }
