@@ -16,13 +16,18 @@ public class B_CreateReactiveMono {
         Mono<String> mono = Mono.justOrEmpty(null);
 
         // Create a Mono from the Supplier interface
-        Mono <String> fromSupplier = Mono.fromSupplier(() -> "Hello");
+        Mono<String> fromSupplier = Mono.fromSupplier(() -> "Hello");
 
         // From Callable interface
         Mono<String> fromCallable = Mono.fromCallable(() -> "Hello");
 
         // Creating a Mono from Future
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> "some value");
-        Mono<String> fromFuture = Mono.fromFuture(completableFuture);
+        CompletableFuture<String[]> completableFuture = CompletableFuture.supplyAsync(() -> new String[]{"a", "b", "c"});
+        Mono<String[]> fromFuture = Mono.fromFuture(completableFuture);
+        fromFuture.subscribe(
+                data -> System.out.println(String.join(",", data)), // onNext
+                System.out::println,  // onError
+                () -> System.out.println("Completed!") // onComplete);
+        );
     }
 }

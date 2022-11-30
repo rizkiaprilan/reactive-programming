@@ -11,7 +11,7 @@ public class D_ExtractDataMonoApplication {
         // Extract data from Mono in Java – blocking way
         Mono<String> fromSupplier = Mono.fromSupplier(() -> {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
